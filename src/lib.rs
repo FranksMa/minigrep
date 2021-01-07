@@ -1,15 +1,13 @@
 use std::error::Error;
 use std::fs;
 
-
-
-struct Config {
+pub struct Config {
     query: String,
     filename: String,
 }
 
 impl Config {
-    fn new(args: &[String]) -> Result<Config,&'static str> {
+    pub fn new(args: &[String]) -> Result<Config,&'static str> {
         if args.len() < 3 {
             return Err("not enough args");
         }
@@ -21,6 +19,11 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) -> Result<(),Box<dyn Error> > {
+/// # 介绍
+/// 程序的运行入口
 
+pub fn run(config: Config) -> Result<(),Box<dyn Error> > {
+    let contents = fs::read_to_string(config.filename)?;
+    println!("with text :\n{ } \n find { }",contents, config.query);
+    Ok(())
 }
